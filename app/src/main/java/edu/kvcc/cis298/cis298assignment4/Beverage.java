@@ -12,6 +12,9 @@ public class Beverage {
     private double mPrice;
     private boolean mActive;
 
+    //private member variable that will hold the name of a contact
+    private String mContact;
+
     public Beverage() {
         //Do Nothing
     }
@@ -65,4 +68,18 @@ public class Beverage {
     public void setActive(boolean active) {
         mActive = active;
     }
+
+
+    //Getter and Setter for the contact
+    public String getContact() {
+        return mContact;
+    }
+
+    public void setContact(String contact) {
+        mContact = contact;
+    }
 }
+
+//beverage collection, beverage fragement, beverage list fragment, beveragepager activity,single fragment activity
+//readme, gradle,android manifest, beverage call back, server request
+//fragment beverage.xml, strings,xml

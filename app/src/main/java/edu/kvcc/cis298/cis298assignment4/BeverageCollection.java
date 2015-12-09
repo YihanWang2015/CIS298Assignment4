@@ -1,6 +1,7 @@
 package edu.kvcc.cis298.cis298assignment4;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -22,6 +23,14 @@ public class BeverageCollection {
     //List to store all of the beverages
     private List<Beverage> mBeverages;
 
+
+
+
+   // private SQLiteDatabase mDatabase;
+
+
+
+
     //public static method to get the single instance of this class
     public static BeverageCollection get(Context context) {
         //If the collection is null
@@ -35,6 +44,11 @@ public class BeverageCollection {
 
     //Private constructor to create a new BeverageCollection
     private BeverageCollection(Context context) {
+
+
+
+
+
         //Make a new list to hold the beverages
         mBeverages = new ArrayList<>();
         //Set the context to the one that is passed in
