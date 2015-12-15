@@ -1,6 +1,8 @@
 package edu.kvcc.cis298.cis298assignment4;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -8,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -20,6 +23,9 @@ public class BeverageFragment extends Fragment {
     //String key that will be used to send data between fragments
     private static final String ARG_BEVERAGE_ID = "crime_id";
 
+
+
+
     //private class level vars for the model properties
     private EditText mId;
     private EditText mName;
@@ -29,6 +35,22 @@ public class BeverageFragment extends Fragment {
 
     //Private var for storing the beverage that will be displayed with this fragment
     private Beverage mBeverage;
+
+    //****************** Private Variables ******************************
+
+    //private var for the email report
+    private Button mEmailReportButton;
+
+    //private var for the contact;
+    private Button mContactButton;
+
+    //*******************END with private variables************************
+
+
+
+
+
+
 
     //Public method to get a properly formatted version of this fragment
     public static BeverageFragment newInstance(String id) {
@@ -109,7 +131,8 @@ public class BeverageFragment extends Fragment {
         //Text listener for the Pack. Updates the model as the text is changed
         mPack.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -117,7 +140,8 @@ public class BeverageFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         //Text listener for the price. Updates the model as the text is typed.
@@ -133,14 +157,15 @@ public class BeverageFragment extends Fragment {
                 //parsed number that is input.
                 if (count > 0) {
                     mBeverage.setPrice(Double.parseDouble(s.toString()));
-                //else there is no text in the box and therefore can't be parsed. Just set the price to zero.
+                    //else there is no text in the box and therefore can't be parsed. Just set the price to zero.
                 } else {
                     mBeverage.setPrice(0);
                 }
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         //Set a checked changed listener on the checkbox
@@ -151,7 +176,67 @@ public class BeverageFragment extends Fragment {
             }
         });
 
+
+        //***********************************************************************
+        //Get a handle to the email report button
+        mEmailReportButton = (Button)view.findViewById(R.id.email_report);
+
+        //set the onClickListener
+        mEmailReportButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent i = new Intent(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                i.putExtra(Intent.EXTRA_TEXT, getBeverageReport());
+                i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.beverage_report_subject));
+
+                i = Intent.createChooser(i, getString(R.string.send_report));
+
+                startActivity(i);
+            }
+        });
+
+
+        final Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+
+
+        //***********************************************************************
+
         //Lastley return the view with all of this stuff attached and set on it.
         return view;
     }
+
+
+
+    private String getBeverageReport(){
+
+        String selectedString = null;
+
+        if(mBeverage.isActive()){
+
+            selectedString = getString(R.string.beverage_report_selected);
+
+        }else{
+
+            selectedString = getString(R.string.beverage_report_unselected);
+        }
+
+
+        String contact =  mBeverage.getContact();
+
+        if(contact == null){
+
+            contact = getString(R.string.beverage_report_no_contact);
+
+        }else{
+
+            contact = getString(R.string.beverage_report_contact, contact);
+        }
+
+
+        String report = getString(R.string.beverage_report, mBeverage.getId(), selectedString, contact);
+
+        return report;
+    }
+
+
 }

@@ -20,4 +20,20 @@
     <string name="email_report_text">Email A Report</string>
 
 
+
+    <string name="beverage_report">%1$s!
+    The beverage is on %2$s. %3$s, and %4$</string>
+
+    <string name="beverage_report_selected">The beverage is selected</string>
+
+    <string name="beverage_report_unselected">The beverage is not selected</string>
+
+    <string name="beverage_report_no_contact">there is no contact</string>
+
+    <string name="beverage_report_contact">the contact is %s.</string>
+
+    <string name="beverage_report_subject">Beverage report</string>
+
+    <string name="send_report">Send beverage report via</string>
+
 </resources>
